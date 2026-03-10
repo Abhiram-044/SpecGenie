@@ -42,7 +42,7 @@ async def complete_registration(magic_token: str, data: RegistrationComplete):
     if data.password != data.confirm_password:
         raise HTTPException(401, "Password Mismatch")
     
-    if db.users_collection.find_one({"username": data.username}):
+    if await db.users_collection.find_one({"username": data.username}):
         raise HTTPException(401, "Username already exist. Enter Another")
 
     user_doc = User(
