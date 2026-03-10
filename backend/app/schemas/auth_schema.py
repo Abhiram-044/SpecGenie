@@ -4,7 +4,6 @@ class RegistrationIntiate(BaseModel):
     email: EmailStr
 
 class RegistrationComplete(BaseModel):
-    token: str
     username: str = Field(..., min_length=3)
     password: str = Field(..., min_length=8)
     confirm_password: str = Field(..., min_length=8)

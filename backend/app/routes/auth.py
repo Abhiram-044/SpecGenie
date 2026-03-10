@@ -29,18 +29,21 @@ async def initiate_registration(data: RegistrationIntiate):
         "magic_token": magic_token
     }
 
-@router.post("/register/complete")
-async def complete_registration(data: RegistrationComplete):
+@router.post("/register/complete/{magic_token}")
+async def complete_registration(magic_token: str, data: RegistrationComplete):
     db = get_database()
     redis_client = get_redis()
     
-    email = await redis_client.get(f"reg_token: {data.token}")
+    email = await redis_client.get(f"reg_token: {magic_token}")
 
     if not email:
         raise HTTPException(400, "Invalid or expired token")
 
     if data.password != data.confirm_password:
         raise HTTPException(401, "Password Mismatch")
+    
+    if db.users_collection.find_one({"username": data.username}):
+        raise HTTPException(401, "Username already exist. Enter Another")
 
     user_doc = User(
         email=email,
@@ -53,7 +56,7 @@ async def complete_registration(data: RegistrationComplete):
         user_doc.model_dump(by_alias=True, exclude={"id"})
     )
 
-    await redis_client.delete(f"reg_token: {data.token}")
+    await redis_client.delete(f"reg_token: {magic_token}")
 
     return {
         "success": True,
