@@ -22,7 +22,7 @@ def verify_password(
 
 def create_access_token(user_id: str, session_id: str):
     expire = datetime.now(timezone.utc) + timedelta(
-        minutes=settings.ACCESS_TOKEN_EXPIRE_DAYS
+        days=settings.ACCESS_TOKEN_EXPIRE_DAYS
     )
 
     payload = {

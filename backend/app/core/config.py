@@ -10,9 +10,9 @@ class Settings(BaseSettings):
     JWT_SECRET: str
     JWT_ALGORITHM: str
     ACCESS_TOKEN_EXPIRE_DAYS: int
-    # SUPABASE_URL: str
-    # SUPABASE_SERVICE_KEY: str
-    # SUPABASE_BUCKET: str
+    AWS_ACCESS_KEY: str
+    AWS_SECRET_KEY: str
+    AWS_S3_BUCKET: str
     # GROQ_API_KEY: str
     # LLM_MODEL: str
 

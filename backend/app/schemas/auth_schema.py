@@ -12,3 +12,4 @@ class TokenResponse(BaseModel):
     success: bool
     access_token: str
     token_type: str = "bearer"
+    onboarding_complete: bool
