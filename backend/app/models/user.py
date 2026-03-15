@@ -9,6 +9,7 @@ class User(MongoBaseModel):
     hashed_password: str
     latest_session_id: str | None
     is_active: bool = False
+    onboarding_complete: bool = False
     created_at: datetime = Field(
         default_factory=lambda: datetime.now(timezone.utc)
     )

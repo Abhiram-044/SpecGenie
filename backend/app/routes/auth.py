@@ -9,6 +9,9 @@ from fastapi.security import OAuth2PasswordRequestForm
 from app.dependencies.auth_dependency import get_current_user
 import uuid
 
+from app.models.master_resume import MasterResume
+from app.schemas import profile_schema
+
 router = APIRouter(prefix="/auth", tags=["Auth"])
 
 @router.post("/register/initiate")
@@ -56,6 +59,21 @@ async def complete_registration(magic_token: str, data: RegistrationComplete):
         user_doc.model_dump(by_alias=True, exclude={"id"})
     )
 
+    user_id = user.inserted_id
+
+    profile = MasterResume(
+        user_id=ObjectId(user_id),
+        personalDetails=profile_schema.PersonalDetails(
+            fullName="",
+            jobTitle="",
+            email=email
+        )
+    )
+
+    await db.master_resume_collection.insert_one(
+        profile.model_dump(by_alias=True, exclude={"id"})
+    )
+
     await redis_client.delete(f"reg_token: {magic_token}")
 
     return {
@@ -94,12 +112,14 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()):
 
     return {
         "success": True,
-        "access_token": token
+        "access_token": token,
+        "onboarding_complete": user["onboarding_complete"]
     }
 
 @router.post("/logout")
 async def logout(user=Depends(get_current_user)):
     db = get_database()
+    redis_client = get_redis()
 
     await db.users_collection.update_one(
         {"_id": ObjectId(user["_id"])},
@@ -108,6 +128,8 @@ async def logout(user=Depends(get_current_user)):
                 "is_active": False      
             }}
         )
+    
+    await redis_client.delete(f"profile:{user['_id']}")
 
     return {
         "success": True,
