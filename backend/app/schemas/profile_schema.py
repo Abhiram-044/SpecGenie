@@ -20,7 +20,7 @@ class SocialLink(BaseModel):
 class PersonalDetails(BaseModel):
     fullName: Optional[str] = None
     jobTitle: Optional[str] = None
-    email: EmailStr
+    email: Optional[EmailStr] = None
     phone: Optional[str] = None
     location: Optional[str] = None
     personalInfo: Optional[str] = None
@@ -56,6 +56,7 @@ class EducationResponse(EducationCreate):
     id: PyObjectId = Field(alias="_id")
 
 class ProfessionalExpCreate(BaseModel):
+    jobTitle: str
     employer: str
     link: Optional[str] = None
     country: Optional[str] = None
