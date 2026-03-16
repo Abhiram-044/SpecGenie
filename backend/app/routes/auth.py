@@ -67,6 +67,9 @@ async def complete_registration(magic_token: str, data: RegistrationComplete):
             fullName="",
             jobTitle="",
             email=email
+        ),
+        declaration=profile_schema.DeclarationSchema(
+            hide=False
         )
     )
 

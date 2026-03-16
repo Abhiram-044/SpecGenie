@@ -53,8 +53,8 @@ class EducationCreate(BaseModel):
     hide: bool = False
 
 class EducationUpdate(BaseModel):
-    degree: Optional[str]
-    school: Optional[str]
+    degree: Optional[str] = None
+    school: Optional[str] = None
     grade: Optional[str] = None
     link: Optional[str] = None
     country: Optional[str] = None
@@ -283,7 +283,7 @@ class DeclarationSchema(BaseModel):
     signature: Optional[str] = None
     place: Optional[str] = None
     issueDate: Optional[date] = None
-    hide: bool = False
+    hide: Optional[bool] = None
 
 class ProfileSummarySchema(BaseModel):
     profileSummary: Optional[str] = None
