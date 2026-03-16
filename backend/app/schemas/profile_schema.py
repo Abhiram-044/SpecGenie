@@ -38,7 +38,7 @@ class PersonalDetails(BaseModel):
         Literal["He / Him", "She / Her", "They / Them", "Preferred Not to Say"]
     ] = None
     visa: Optional[str] = None
-    socialLinks: List[SocialLink] = []
+    socialLinks: Optional[List[SocialLink]] = None
 
 class EducationCreate(BaseModel):
     degree: str
@@ -51,6 +51,18 @@ class EducationCreate(BaseModel):
     endDate: Optional[date] = None
     description: Optional[str] = None
     hide: bool = False
+
+class EducationUpdate(BaseModel):
+    degree: Optional[str]
+    school: Optional[str]
+    grade: Optional[str] = None
+    link: Optional[str] = None
+    country: Optional[str] = None
+    city: Optional[str] = None
+    startDate: Optional[date] = None
+    endDate: Optional[date] = None
+    description: Optional[str] = None
+    hide: Optional[bool] = None
 
 class EducationResponse(EducationCreate):
     id: PyObjectId = Field(alias="_id")
@@ -66,16 +78,35 @@ class ProfessionalExpCreate(BaseModel):
     description: Optional[str] = None
     hide: bool = False
 
+class ProfessionalExpUpdate(BaseModel):
+    jobTitle: Optional[str] = None
+    employer: Optional[str] = None
+    link: Optional[str] = None
+    country: Optional[str] = None
+    city: Optional[str] = None
+    startDate: Optional[date] = None
+    endDate: Optional[date] = None
+    description: Optional[str] = None
+    hide: Optional[bool] = None
+
 class ProfessionalExpResponse(ProfessionalExpCreate):
     id: PyObjectId = Field(alias="_id")
 
 class SkillCreate(BaseModel):
     name: str
-    subSkils: List[str] = []
+    subSkils: Optional[List[str]] = None
     level: Optional[
         Literal["BEGINNER", "AMATEUR", "COMPETENT", "PROFICIENT", "EXPERT"]
     ] = None
     hide: bool = False
+
+class SkillUpdate(BaseModel):
+    name: Optional[str] = None
+    subSkils: Optional[List[str]] = None
+    level: Optional[
+        Literal["BEGINNER", "AMATEUR", "COMPETENT", "PROFICIENT", "EXPERT"]
+    ] = None
+    hide: Optional[bool] = None
 
 class SkillResponse(SkillCreate):
     id: PyObjectId = Field(alias="_id")
@@ -87,6 +118,14 @@ class LanguageCreate(BaseModel):
         Literal["BASIC", "CONVERSATIONAL", "PROFICIENT", "FLUENT", "NATIVE"]
     ] = None
     hide: bool = False
+
+class LanguageUpdate(BaseModel):
+    name: Optional[str] = None
+    additionalInfo: Optional[str] = None
+    level: Optional[
+        Literal["BASIC", "CONVERSATIONAL", "PROFICIENT", "FLUENT", "NATIVE"]
+    ] = None
+    hide: Optional[bool] = None
 
 class LanguageResponse(LanguageCreate):
     id: PyObjectId = Field(alias="_id")
@@ -101,6 +140,16 @@ class CertificateCreate(BaseModel):
     additionalInfo: Optional[str] = None
     hide: bool = False
 
+class CertificateUpdate(BaseModel):
+    title: Optional[str] = None
+    link: Optional[str] = None
+    license: Optional[str] = None
+    issuer: Optional[str] = None
+    issueDate: Optional[date] = None
+    expirationDate: Optional[date] = None
+    additionalInfo: Optional[str] = None
+    hide: Optional[bool] = None
+
 class CertificateResponse(CertificateCreate):
     id: PyObjectId = Field(alias="_id")
 
@@ -114,8 +163,17 @@ class ProjectCreate(BaseModel):
     description: Optional[str] = None
     startDate: Optional[date] = None
     endDate: Optional[date] = None
-    links: Optional[List[ProjectLinks]] = []
+    links: Optional[List[ProjectLinks]] = None
     hide: bool = False
+
+class ProjectUpdate(BaseModel):
+    title: Optional[str] = None
+    subtitle: Optional[str] = None
+    description: Optional[str] = None
+    startDate: Optional[date] = None
+    endDate: Optional[date] = None
+    links: Optional[List[ProjectLinks]] = None
+    hide: Optional[bool] = None
 
 class ProjectResponse(ProjectCreate):
     id: PyObjectId = Field(alias="_id")
@@ -125,6 +183,12 @@ class AwardCreate(BaseModel):
     issuer: Optional[str] = None
     issueDate: Optional[date] = None
     hide: bool = False
+
+class AwardUpdate(BaseModel):
+    title: Optional[str] = None
+    issuer: Optional[str] = None
+    issueDate: Optional[date] = None
+    hide: Optional[bool] = None
 
 class AwardResponse(AwardCreate):
     id: PyObjectId = Field(alias="_id")
@@ -137,6 +201,15 @@ class CourseCreate(BaseModel):
     expirationDate: Optional[date] = None
     additionalInfo: Optional[str] = None
     hide: bool = False
+
+class CourseUpdate(BaseModel):
+    title: Optional[str] = None
+    license: Optional[str] = None
+    issuer: Optional[str] = None
+    issueDate: Optional[date] = None
+    expirationDate: Optional[date] = None
+    additionalInfo: Optional[str] = None
+    hide: Optional[bool] = None
 
 class CourseResponse(CourseCreate):
     id: PyObjectId = Field(alias="_id")
@@ -151,6 +224,16 @@ class OrganizationCreate(BaseModel):
     description: Optional[str] = None
     hide: bool = False
 
+class OrganizationUpdate(BaseModel):
+    name: Optional[str] = None
+    link: Optional[str] = None
+    country: Optional[str] = None
+    city: Optional[str] = None
+    startDate: Optional[date] = None
+    endDate: Optional[date] = None
+    description: Optional[str] = None
+    hide: Optional[bool] = None
+
 class OrganizationResponse(OrganizationCreate):
     id: PyObjectId = Field(alias="_id")
 
@@ -161,6 +244,14 @@ class PublicationCreate(BaseModel):
     issueDate: Optional[date] = None
     description: Optional[str] = None
     hide: bool = False
+
+class PublicationUpdate(BaseModel):
+    title: Optional[str] = None
+    link: Optional[str] = None
+    publisher: Optional[str] = None
+    issueDate: Optional[date] = None
+    description: Optional[str] = None
+    hide: Optional[bool] = None
 
 class PublicationResponse(PublicationCreate):
     id: PyObjectId = Field(alias="_id")
@@ -173,6 +264,15 @@ class ReferenceCreate(BaseModel):
     email: Optional[str] = None
     phone: Optional[str] = None
     hide: bool = False
+
+class ReferenceUpdate(BaseModel):
+    name: Optional[str] = None
+    link: Optional[str] = None
+    jobTitle: Optional[str] = None
+    organization: Optional[str] = None
+    email: Optional[str] = None
+    phone: Optional[str] = None
+    hide: Optional[bool] = None
 
 class ReferenceResponse(ReferenceCreate):
     id: PyObjectId = Field(alias="_id")
