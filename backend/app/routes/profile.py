@@ -60,7 +60,7 @@ async def get_profile(user=Depends(get_current_user)):
         "data": cleaned_profile
     }
 
-@router.patch("/personal")
+@router.patch("/personal-details")
 async def update_personal_details(
     data: profile_schema.PersonalDetails,
     user=Depends(get_current_user)
@@ -88,7 +88,7 @@ async def update_personal_details(
         "data": jsonable_encoder(data)
     }
 
-@router.post("/education")
+@router.post("/education-details")
 async def add_education(
     data: profile_schema.EducationCreate,
     user=Depends(get_current_user)
@@ -126,7 +126,7 @@ async def add_education(
         "data": jsonable_encoder(education_doc)
     }
 
-@router.patch("/education/{education_id}")
+@router.patch("/education-details/{education_id}")
 async def update_education(
     education_id: str,
     data: profile_schema.EducationCreate,
@@ -163,7 +163,7 @@ async def update_education(
         "data": jsonable_encoder(data)
     }
 
-@router.delete("/education/{education_id}")
+@router.delete("/education-details/{education_id}")
 async def delete_education(
     education_id: str,
     user=Depends(get_current_user)
@@ -198,7 +198,7 @@ async def delete_education(
         "data": {"deleted_id": str(obj_id)}
     }
 
-@router.post("/skill")
+@router.post("/skills")
 async def add_skill(
     data: profile_schema.SkillCreate,
     user=Depends(get_current_user)
@@ -236,7 +236,7 @@ async def add_skill(
         "data": jsonable_encoder(skill_doc)
     }
 
-@router.patch("/skill/{skill_id}")
+@router.patch("/skills/{skill_id}")
 async def update_skill(
     skill_id: str,
     data: profile_schema.SkillCreate,
@@ -273,7 +273,7 @@ async def update_skill(
         "data": jsonable_encoder(data)
     }
 
-@router.delete("/skill/{skill_id}")
+@router.delete("/skills/{skill_id}")
 async def delete_skill(
     skill_id: str,
     user=Depends(get_current_user)
@@ -308,7 +308,7 @@ async def delete_skill(
         "data": {"deleted_id": str(obj_id)}
     }
 
-@router.post("/experience")
+@router.post("/professional-experiences")
 async def add_experience(
     data: profile_schema.ProfessionalExpCreate,
     user=Depends(get_current_user)
@@ -346,7 +346,7 @@ async def add_experience(
         "data": jsonable_encoder(profExp_doc)
     }
 
-@router.patch("/experience/{experience_id}")
+@router.patch("/professional-experiences/{experience_id}")
 async def update_experience(
     experience_id: str,
     data: profile_schema.ProfessionalExpCreate,
@@ -383,7 +383,7 @@ async def update_experience(
         "data": jsonable_encoder(data)
     }
 
-@router.delete("/experience/{experience_id}")
+@router.delete("/professional-experiences/{experience_id}")
 async def delete_experience(
     experience_id: str,
     user=Depends(get_current_user)
@@ -418,7 +418,7 @@ async def delete_experience(
         "data": {"deleted_id": str(obj_id)}
     }
 
-@router.post("/language")
+@router.post("/languages")
 async def add_language(
     data: profile_schema.LanguageCreate,
     user=Depends(get_current_user)
@@ -456,7 +456,7 @@ async def add_language(
         "data": jsonable_encoder(lang_doc)
     }
 
-@router.patch("/language/{language_id}")
+@router.patch("/languages/{language_id}")
 async def update_language(
     language_id: str,
     data: profile_schema.LanguageCreate,
@@ -493,7 +493,7 @@ async def update_language(
         "data": jsonable_encoder(data)
     }
 
-@router.delete("/language/{language_id}")
+@router.delete("/languages/{language_id}")
 async def delete_language(
     language_id: str,
     user=Depends(get_current_user)
@@ -528,7 +528,7 @@ async def delete_language(
         "data": {"deleted_id": str(obj_id)}
     }
 
-@router.post("/certificate")
+@router.post("/certificates")
 async def add_certificate(
     data: profile_schema.CertificateCreate,
     user=Depends(get_current_user)
@@ -566,7 +566,7 @@ async def add_certificate(
         "data": jsonable_encoder(certi_doc)
     }
 
-@router.patch("/certificate/{certificate_id}")
+@router.patch("/certificates/{certificate_id}")
 async def update_certificate(
     certificate_id: str,
     data: profile_schema.CertificateCreate,
@@ -603,7 +603,7 @@ async def update_certificate(
         "data": jsonable_encoder(data)
     }
 
-@router.delete("/certificate/{certificate_id}")
+@router.delete("/certificates/{certificate_id}")
 async def delete_certificate(
     certificate_id: str,
     user=Depends(get_current_user)
@@ -638,7 +638,7 @@ async def delete_certificate(
         "data": {"deleted_id": str(obj_id)}
     }
 
-@router.post("/project")
+@router.post("/projects")
 async def add_project(
     data: profile_schema.ProjectCreate,
     user=Depends(get_current_user)
@@ -676,7 +676,7 @@ async def add_project(
         "data": jsonable_encoder(proj_doc)
     }
 
-@router.patch("/project/{project_id}")
+@router.patch("/projects/{project_id}")
 async def update_project(
     project_id: str,
     data: profile_schema.ProjectCreate,
@@ -713,7 +713,7 @@ async def update_project(
         "data": jsonable_encoder(data)
     }
 
-@router.delete("/project/{project_id}")
+@router.delete("/projects/{project_id}")
 async def delete_project(
     project_id: str,
     user=Depends(get_current_user)
@@ -748,7 +748,7 @@ async def delete_project(
         "data": {"deleted_id": str(obj_id)}
     }
 
-@router.post("/award")
+@router.post("/awards")
 async def add_award(
     data: profile_schema.AwardCreate,
     user=Depends(get_current_user)
@@ -786,7 +786,7 @@ async def add_award(
         "data": jsonable_encoder(award_doc)
     }
 
-@router.patch("/award/{award_id}")
+@router.patch("/awards/{award_id}")
 async def update_award(
     award_id: str,
     data: profile_schema.AwardCreate,
@@ -823,7 +823,7 @@ async def update_award(
         "data": jsonable_encoder(data)
     }
 
-@router.delete("/award/{award_id}")
+@router.delete("/awards/{award_id}")
 async def delete_award(
     award_id: str,
     user=Depends(get_current_user)
@@ -858,7 +858,7 @@ async def delete_award(
         "data": {"deleted_id": str(obj_id)}
     }
 
-@router.post("/course")
+@router.post("/courses")
 async def add_course(
     data: profile_schema.CourseCreate,
     user=Depends(get_current_user)
@@ -896,7 +896,7 @@ async def add_course(
         "data": jsonable_encoder(course_doc)
     }
 
-@router.patch("/course/{course_id}")
+@router.patch("/courses/{course_id}")
 async def update_course(
     course_id: str,
     data: profile_schema.CourseCreate,
@@ -933,7 +933,7 @@ async def update_course(
         "data": jsonable_encoder(data)
     }
 
-@router.delete("/course/{course_id}")
+@router.delete("/courses/{course_id}")
 async def delete_course(
     course_id: str,
     user=Depends(get_current_user)
@@ -968,7 +968,7 @@ async def delete_course(
         "data": {"deleted_id": str(obj_id)}
     }
 
-@router.post("/organization")
+@router.post("/organizations")
 async def add_organization(
     data: profile_schema.OrganizationCreate,
     user=Depends(get_current_user)
@@ -1006,7 +1006,7 @@ async def add_organization(
         "data": jsonable_encoder(organization_doc)
     }
 
-@router.patch("/organization/{organization_id}")
+@router.patch("/organizations/{organization_id}")
 async def update_organization(
     organization_id: str,
     data: profile_schema.OrganizationCreate,
@@ -1043,7 +1043,7 @@ async def update_organization(
         "data": jsonable_encoder(data)
     }
 
-@router.delete("/organization/{organization_id}")
+@router.delete("/organizations/{organization_id}")
 async def delete_organization(
     organization_id: str,
     user=Depends(get_current_user)
@@ -1078,7 +1078,7 @@ async def delete_organization(
         "data": {"deleted_id": str(obj_id)}
     }
 
-@router.post("/publication")
+@router.post("/publications")
 async def add_publication(
     data: profile_schema.PublicationCreate,
     user=Depends(get_current_user)
@@ -1116,7 +1116,7 @@ async def add_publication(
         "data": jsonable_encoder(publication_doc)
     }
 
-@router.patch("/publication/{publication_id}")
+@router.patch("/publications/{publication_id}")
 async def update_publication(
     publication_id: str,
     data: profile_schema.PublicationCreate,
@@ -1153,7 +1153,7 @@ async def update_publication(
         "data": jsonable_encoder(data)
     }
 
-@router.delete("/publication/{publication_id}")
+@router.delete("/publications/{publication_id}")
 async def delete_publication(
     publication_id: str,
     user=Depends(get_current_user)
@@ -1188,7 +1188,7 @@ async def delete_publication(
         "data": {"deleted_id": str(obj_id)}
     }
 
-@router.post("/reference")
+@router.post("/references")
 async def add_reference(
     data: profile_schema.ReferenceCreate,
     user=Depends(get_current_user)
@@ -1226,7 +1226,7 @@ async def add_reference(
         "data": jsonable_encoder(reference_doc)
     }
 
-@router.patch("/reference/{reference_id}")
+@router.patch("/references/{reference_id}")
 async def update_reference(
     reference_id: str,
     data: profile_schema.ReferenceCreate,
@@ -1263,7 +1263,7 @@ async def update_reference(
         "data": jsonable_encoder(data)
     }
 
-@router.delete("/reference/{reference_id}")
+@router.delete("/references/{reference_id}")
 async def delete_reference(
     reference_id: str,
     user=Depends(get_current_user)
@@ -1298,7 +1298,7 @@ async def delete_reference(
         "data": {"deleted_id": str(obj_id)}
     }
 
-@router.patch("/picture")
+@router.patch("/image")
 async def upload_picture(file: UploadFile = File(...), user=Depends(get_current_user)):
 
     if file.content_type not in ["image/png", "image/jpeg"]:
@@ -1342,7 +1342,7 @@ async def upload_picture(file: UploadFile = File(...), user=Depends(get_current_
         "data": {"signed_url": signed_url}
     }
 
-@router.delete("/picture")
+@router.delete("/image")
 async def delete_picture(user=Depends(get_current_user)):
 
     db = get_database()
@@ -1380,6 +1380,35 @@ async def delete_picture(user=Depends(get_current_user)):
         "success": True,
         "message": "Profile Picture Deleted",
         "data": {"signed_url": None}
+    }
+
+@router.patch("/image/toggle-visibility")
+async def toggle_image_visibility(user=Depends(get_current_user)):
+    db = get_database()
+    redis_client = get_redis()
+
+    result = await db.master_resume_collection.find_one_and_update(
+        {"user_id": ObjectId(user["_id"])},
+        [
+            {
+                "$set": {
+                    "hideProfilePicture": {
+                        "$not": ["$hideProfilePicture"]
+                    }
+                }
+            }
+        ],
+        return_document=True
+    )
+
+    await redis_client.delete(f"profile:{user['_id']}")
+
+    return {
+        "success": True,
+        "message": "Updated Profile Images Visibility",
+        "data": {
+            "hideProfilePicture": result["hideProfilePicture"]
+        }
     }
 
 @router.patch("/declaration")
@@ -1519,34 +1548,6 @@ async def update_summary(
         "data": jsonable_encoder(data)
     }
 
-@router.patch("/image/toggle-visibility")
-async def toggle_image_visibility(user=Depends(get_current_user)):
-    db = get_database()
-    redis_client = get_redis()
-
-    result = await db.master_resume_collection.find_one_and_update(
-        {"user_id": ObjectId(user["_id"])},
-        [
-            {
-                "$set": {
-                    "hideProfilePicture": {
-                        "$not": ["$hideProfilePicture"]
-                    }
-                }
-            }
-        ],
-        return_document=True
-    )
-
-    await redis_client.delete(f"profile:{user['_id']}")
-
-    return {
-        "success": True,
-        "message": "Updated Profile Images Visibility",
-        "data": {
-            "hideProfilePicture": result["hideProfilePicture"]
-        }
-    }
 
 @router.patch("/onboarding")
 async def complete_onboarding(user=Depends(get_current_user)):
