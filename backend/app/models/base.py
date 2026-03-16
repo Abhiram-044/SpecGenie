@@ -14,7 +14,7 @@ class PyObjectId(ObjectId):
             return ObjectId(value)
 
         return core_schema.no_info_plain_validator_function(validate)
-    
+
 class MongoBaseModel(BaseModel):
     id: PyObjectId | None = None
 
