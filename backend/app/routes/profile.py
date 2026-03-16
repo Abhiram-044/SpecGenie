@@ -129,7 +129,7 @@ async def add_education(
 @router.patch("/education-details/{education_id}")
 async def update_education(
     education_id: str,
-    data: profile_schema.EducationCreate,
+    data: profile_schema.EducationUpdate,
     user=Depends(get_current_user)
 ):
     
@@ -239,7 +239,7 @@ async def add_skill(
 @router.patch("/skills/{skill_id}")
 async def update_skill(
     skill_id: str,
-    data: profile_schema.SkillCreate,
+    data: profile_schema.SkillUpdate,
     user=Depends(get_current_user)
 ):
     
@@ -349,7 +349,7 @@ async def add_experience(
 @router.patch("/professional-experiences/{experience_id}")
 async def update_experience(
     experience_id: str,
-    data: profile_schema.ProfessionalExpCreate,
+    data: profile_schema.ProfessionalExpUpdate,
     user=Depends(get_current_user)
 ):
     
@@ -459,7 +459,7 @@ async def add_language(
 @router.patch("/languages/{language_id}")
 async def update_language(
     language_id: str,
-    data: profile_schema.LanguageCreate,
+    data: profile_schema.LanguageUpdate,
     user=Depends(get_current_user)
 ):
     
@@ -569,7 +569,7 @@ async def add_certificate(
 @router.patch("/certificates/{certificate_id}")
 async def update_certificate(
     certificate_id: str,
-    data: profile_schema.CertificateCreate,
+    data: profile_schema.CertificateUpdate,
     user=Depends(get_current_user)
 ):
     
@@ -679,7 +679,7 @@ async def add_project(
 @router.patch("/projects/{project_id}")
 async def update_project(
     project_id: str,
-    data: profile_schema.ProjectCreate,
+    data: profile_schema.ProjectUpdate,
     user=Depends(get_current_user)
 ):
     
@@ -789,7 +789,7 @@ async def add_award(
 @router.patch("/awards/{award_id}")
 async def update_award(
     award_id: str,
-    data: profile_schema.AwardCreate,
+    data: profile_schema.AwardUpdate,
     user=Depends(get_current_user)
 ):
     
@@ -899,7 +899,7 @@ async def add_course(
 @router.patch("/courses/{course_id}")
 async def update_course(
     course_id: str,
-    data: profile_schema.CourseCreate,
+    data: profile_schema.CourseUpdate,
     user=Depends(get_current_user)
 ):
     
@@ -1009,7 +1009,7 @@ async def add_organization(
 @router.patch("/organizations/{organization_id}")
 async def update_organization(
     organization_id: str,
-    data: profile_schema.OrganizationCreate,
+    data: profile_schema.OrganizationUpdate,
     user=Depends(get_current_user)
 ):
     
@@ -1119,7 +1119,7 @@ async def add_publication(
 @router.patch("/publications/{publication_id}")
 async def update_publication(
     publication_id: str,
-    data: profile_schema.PublicationCreate,
+    data: profile_schema.PublicationUpdate,
     user=Depends(get_current_user)
 ):
     
@@ -1229,7 +1229,7 @@ async def add_reference(
 @router.patch("/references/{reference_id}")
 async def update_reference(
     reference_id: str,
-    data: profile_schema.ReferenceCreate,
+    data: profile_schema.ReferenceUpdate,
     user=Depends(get_current_user)
 ):
     
