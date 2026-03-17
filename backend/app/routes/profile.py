@@ -25,10 +25,17 @@ async def get_profile(user=Depends(get_current_user)):
     cached_profile = await redis_client.get(cache_key)
 
     if cached_profile:
+        data =  json.loads(cached_profile)
+
+        if data.get("profilePicture"):
+            data["profilePicture"] = await generate_signed_url(data["profilePicture"])
+        if data.get("declaration", {}).get("signature"):
+            data["declaration"]["signature"] = await generate_signed_url(data["declaration"]["signature"])
+        
         return {
             "success": True,
             "message": "Fetched Profile Data Successfully",
-            "data": json.loads(cached_profile)
+            "data": data
         }
     
     profile = await db.master_resume_collection.find_one({
@@ -53,6 +60,11 @@ async def get_profile(user=Depends(get_current_user)):
         json.dumps(cleaned_profile),
         ex=86400
     )
+
+    if cleaned_profile.get("profilePicture"):
+        cleaned_profile["profilePicture"] = await generate_signed_url(cleaned_profile["profilePicture"])
+    if cleaned_profile.get("declaration", {}).get("signature"):
+        cleaned_profile["declaration"]["signature"] = await generate_signed_url(cleaned_profile["declaration"]["signature"])
 
     return {
         "success": True,
@@ -82,10 +94,12 @@ async def update_personal_details(
     
     await redis_client.delete(f"profile:{user['_id']}")
 
+    dump_model = data.model_dump(exclude_unset=True)
+
     return {
         "success": True,
         "message": "Personal details updated",
-        "data": jsonable_encoder(data)
+        "data": jsonable_encoder(dump_model)
     }
 
 @router.post("/education-details")
@@ -120,10 +134,12 @@ async def add_education(
 
     education_doc["_id"] = str(education_doc["_id"])
 
+    cleaned_doc = remove_empty_fields(education_doc)
+
     return {
         "success": True,
         "message": "Education added",
-        "data": jsonable_encoder(education_doc)
+        "data": jsonable_encoder(cleaned_doc)
     }
 
 @router.patch("/education-details/{education_id}")
@@ -157,10 +173,12 @@ async def update_education(
 
     await redis_client.delete(f"profile:{user['_id']}")
 
+    dump_model = data.model_dump(exclude_unset=True)
+
     return {
         "success": True,
         "message": "Education updated",
-        "data": jsonable_encoder(data)
+        "data": jsonable_encoder(dump_model)
     }
 
 @router.delete("/education-details/{education_id}")
@@ -230,10 +248,12 @@ async def add_skill(
     
     skill_doc["_id"] = str(skill_doc["_id"])
 
+    cleaned_doc = remove_empty_fields(skill_doc)
+
     return {
         "success": True,
         "message": "Skill added",
-        "data": jsonable_encoder(skill_doc)
+        "data": jsonable_encoder(cleaned_doc)
     }
 
 @router.patch("/skills/{skill_id}")
@@ -267,10 +287,12 @@ async def update_skill(
 
     await redis_client.delete(f"profile:{user['_id']}")
 
+    dump_model = data.model_dump(exclude_unset=True)
+
     return {
         "success": True,
         "message": "Skill updated",
-        "data": jsonable_encoder(data)
+        "data": jsonable_encoder(dump_model)
     }
 
 @router.delete("/skills/{skill_id}")
@@ -340,10 +362,12 @@ async def add_experience(
 
     profExp_doc["_id"] = str(profExp_doc["_id"])
 
+    cleaned_doc = remove_empty_fields(profExp_doc)
+
     return {
         "success": True,
         "message": "Experience added",
-        "data": jsonable_encoder(profExp_doc)
+        "data": jsonable_encoder(cleaned_doc)
     }
 
 @router.patch("/professional-experiences/{experience_id}")
@@ -377,10 +401,12 @@ async def update_experience(
 
     await redis_client.delete(f"profile:{user['_id']}")
 
+    dump_model = data.model_dump(exclude_unset=True)
+
     return {
         "success": True,
         "message": "Experience updated",
-        "data": jsonable_encoder(data)
+        "data": jsonable_encoder(dump_model)
     }
 
 @router.delete("/professional-experiences/{experience_id}")
@@ -450,10 +476,12 @@ async def add_language(
 
     lang_doc["_id"] = str(lang_doc["_id"])
 
+    cleaned_doc = remove_empty_fields(lang_doc)
+
     return {
         "success": True,
         "message": "Language added",
-        "data": jsonable_encoder(lang_doc)
+        "data": jsonable_encoder(cleaned_doc)
     }
 
 @router.patch("/languages/{language_id}")
@@ -487,10 +515,12 @@ async def update_language(
 
     await redis_client.delete(f"profile:{user['_id']}")
 
+    dump_model = data.model_dump(exclude_unset=True)
+
     return {
         "success": True,
         "message": "Language updated",
-        "data": jsonable_encoder(data)
+        "data": jsonable_encoder(dump_model)
     }
 
 @router.delete("/languages/{language_id}")
@@ -560,10 +590,12 @@ async def add_certificate(
 
     certi_doc["_id"] = str(certi_doc["_id"])
 
+    cleaned_doc = remove_empty_fields(certi_doc)
+
     return {
         "success": True,
         "message": "Certificate added",
-        "data": jsonable_encoder(certi_doc)
+        "data": jsonable_encoder(cleaned_doc)
     }
 
 @router.patch("/certificates/{certificate_id}")
@@ -597,10 +629,12 @@ async def update_certificate(
 
     await redis_client.delete(f"profile:{user['_id']}")
 
+    dump_model = data.model_dump(exclude_unset=True)
+
     return {
         "success": True,
         "message": "Certificate updated",
-        "data": jsonable_encoder(data)
+        "data": jsonable_encoder(dump_model)
     }
 
 @router.delete("/certificates/{certificate_id}")
@@ -670,10 +704,12 @@ async def add_project(
 
     proj_doc["_id"] = str(proj_doc["_id"])
 
+    cleaned_doc = remove_empty_fields(proj_doc)
+
     return {
         "success": True,
         "message": "Project added",
-        "data": jsonable_encoder(proj_doc)
+        "data": jsonable_encoder(cleaned_doc)
     }
 
 @router.patch("/projects/{project_id}")
@@ -707,10 +743,12 @@ async def update_project(
 
     await redis_client.delete(f"profile:{user['_id']}")
 
+    dump_model = data.model_dump(exclude_unset=True)
+
     return {
         "success": True,
         "message": "Project updated",
-        "data": jsonable_encoder(data)
+        "data": jsonable_encoder(dump_model)
     }
 
 @router.delete("/projects/{project_id}")
@@ -780,10 +818,12 @@ async def add_award(
 
     award_doc["_id"] = str(award_doc["_id"])
 
+    cleaned_doc = remove_empty_fields(award_doc)
+
     return {
         "success": True,
         "message": "Award added",
-        "data": jsonable_encoder(award_doc)
+        "data": jsonable_encoder(cleaned_doc)
     }
 
 @router.patch("/awards/{award_id}")
@@ -817,10 +857,12 @@ async def update_award(
 
     await redis_client.delete(f"profile:{user['_id']}")
 
+    dump_model = data.model_dump(exclude_unset=True)
+
     return {
         "success": True,
         "message": "Award updated",
-        "data": jsonable_encoder(data)
+        "data": jsonable_encoder(dump_model)
     }
 
 @router.delete("/awards/{award_id}")
@@ -890,10 +932,12 @@ async def add_course(
 
     course_doc["_id"] = str(course_doc["_id"])
 
+    cleaned_doc = remove_empty_fields(course_doc)
+
     return {
         "success": True,
         "message": "Course added",
-        "data": jsonable_encoder(course_doc)
+        "data": jsonable_encoder(cleaned_doc)
     }
 
 @router.patch("/courses/{course_id}")
@@ -927,10 +971,12 @@ async def update_course(
 
     await redis_client.delete(f"profile:{user['_id']}")
 
+    dump_model = data.model_dump(exclude_unset=True)
+
     return {
         "success": True,
         "message": "Course updated",
-        "data": jsonable_encoder(data)
+        "data": jsonable_encoder(dump_model)
     }
 
 @router.delete("/courses/{course_id}")
@@ -1000,10 +1046,12 @@ async def add_organization(
 
     organization_doc["_id"] = str(organization_doc["_id"])
 
+    cleaned_doc = remove_empty_fields(organization_doc)
+
     return {
         "success": True,
         "message": "Organization added",
-        "data": jsonable_encoder(organization_doc)
+        "data": jsonable_encoder(cleaned_doc)
     }
 
 @router.patch("/organizations/{organization_id}")
@@ -1037,10 +1085,12 @@ async def update_organization(
 
     await redis_client.delete(f"profile:{user['_id']}")
 
+    dump_model = data.model_dump(exclude_unset=True)
+
     return {
         "success": True,
         "message": "Organization updated",
-        "data": jsonable_encoder(data)
+        "data": jsonable_encoder(dump_model)
     }
 
 @router.delete("/organizations/{organization_id}")
@@ -1110,10 +1160,12 @@ async def add_publication(
 
     publication_doc["_id"] = str(publication_doc["_id"])
 
+    cleaned_doc = remove_empty_fields(publication_doc)
+
     return {
         "success": True,
         "message": "Publication added",
-        "data": jsonable_encoder(publication_doc)
+        "data": jsonable_encoder(cleaned_doc)
     }
 
 @router.patch("/publications/{publication_id}")
@@ -1147,10 +1199,12 @@ async def update_publication(
 
     await redis_client.delete(f"profile:{user['_id']}")
 
+    dump_model = data.model_dump(exclude_unset=True)
+
     return {
         "success": True,
         "message": "Publication updated",
-        "data": jsonable_encoder(data)
+        "data": jsonable_encoder(dump_model)
     }
 
 @router.delete("/publications/{publication_id}")
@@ -1220,10 +1274,12 @@ async def add_reference(
 
     reference_doc["_id"] = str(reference_doc["_id"])
 
+    cleaned_doc = remove_empty_fields(reference_doc)
+
     return {
         "success": True,
         "message": "Reference added",
-        "data": jsonable_encoder(reference_doc)
+        "data": jsonable_encoder(cleaned_doc)
     }
 
 @router.patch("/references/{reference_id}")
@@ -1257,10 +1313,12 @@ async def update_reference(
 
     await redis_client.delete(f"profile:{user['_id']}")
 
+    dump_model = data.model_dump(exclude_unset=True)
+
     return {
         "success": True,
         "message": "Reference updated",
-        "data": jsonable_encoder(data)
+        "data": jsonable_encoder(dump_model)
     }
 
 @router.delete("/references/{reference_id}")
@@ -1413,7 +1471,7 @@ async def toggle_image_visibility(user=Depends(get_current_user)):
 
 @router.patch("/declaration")
 async def update_declaration(
-    data: profile_schema.DeclarationSchema,
+    data: profile_schema.DeclarationUpdate,
     user=Depends(get_current_user)
 ):
     db = get_database()
@@ -1430,10 +1488,12 @@ async def update_declaration(
     
     await redis_client.delete(f"profile:{user['_id']}")
 
+    dump_model = data.model_dump(exclude_unset=True)
+
     return {
         "success": True,
         "message": "Declaration updated",
-        "data": jsonable_encoder(data)
+        "data": jsonable_encoder(dump_model)
     }
 
 @router.patch("/declaration/signature")
