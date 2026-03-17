@@ -285,6 +285,13 @@ class DeclarationSchema(BaseModel):
     issueDate: Optional[date] = None
     hide: Optional[bool] = None
 
+class DeclarationUpdate(BaseModel):
+    text: Optional[str] = None
+    fullName: Optional[str] = None
+    place: Optional[str] = None
+    issueDate: Optional[date] = None
+    hide: Optional[bool] = None
+
 class ProfileSummarySchema(BaseModel):
     profileSummary: Optional[str] = None
     hideProfileSummary: Optional[bool] = None
