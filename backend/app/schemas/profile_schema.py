@@ -180,12 +180,14 @@ class ProjectResponse(ProjectCreate):
 
 class AwardCreate(BaseModel):
     title: str
+    link: Optional[str] = None
     issuer: Optional[str] = None
     issueDate: Optional[date] = None
     hide: bool = False
 
 class AwardUpdate(BaseModel):
     title: Optional[str] = None
+    link: Optional[str] = None
     issuer: Optional[str] = None
     issueDate: Optional[date] = None
     hide: Optional[bool] = None
@@ -195,6 +197,7 @@ class AwardResponse(AwardCreate):
 
 class CourseCreate(BaseModel):
     title: str
+    link: Optional[str] = None
     license: Optional[str] = None
     issuer: Optional[str] = None
     issueDate: Optional[date] = None
@@ -204,6 +207,7 @@ class CourseCreate(BaseModel):
 
 class CourseUpdate(BaseModel):
     title: Optional[str] = None
+    link: Optional[str] = None
     license: Optional[str] = None
     issuer: Optional[str] = None
     issueDate: Optional[date] = None
