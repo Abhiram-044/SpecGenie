@@ -6,6 +6,8 @@ from app.utils.resume_helpers import serialize_for_mongo
 
 def get_top_level_update_query(field_name: str, schema_data: BaseModel) -> Dict[str, Any]:
     update_data = schema_data.model_dump(exclude_none=True)
+    for link in update_data.get("socialLinks", []):
+        link["url"] = str(link["url"])
     update_data = serialize_for_mongo(update_data)
 
     return {
@@ -29,6 +31,9 @@ def get_array_item_update_query(
         schema_data: BaseModel
 ) -> Dict[str, Any]:
     update_data = schema_data.model_dump(exclude_unset=True)
+    if list_field == "projects":
+        for link in update_data.get("links", []):
+            link["url"] = str(link["url"])
     update_data = serialize_for_mongo(update_data)
 
     set_query = {f"{list_field}.$[elem].{k}": v for k, v in update_data.items() if k != "id"}
