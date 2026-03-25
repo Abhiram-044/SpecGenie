@@ -682,6 +682,8 @@ async def add_project(
 
     proj_doc = data.model_dump(by_alias=True)
     proj_doc = serialize_for_mongo(proj_doc)
+    for link in proj_doc.get("links", []):
+        link["url"] = str(link["url"])
 
     if "_id" not in proj_doc:
         proj_doc["_id"] = ObjectId()
